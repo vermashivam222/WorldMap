@@ -1,11 +1,23 @@
 import { VectorMap } from "@react-jvectormap/core";
 import { worldMill } from "@react-jvectormap/world";
-import React from "react";
+import React, { useState } from "react";
 
 function WorldMap() {
+  const [countryData, setCountryData] = useState(null);
+
+  const handleCountryClick = (event, code) => {
+    fetch(`https://restcountries.com/v3.1/alpha/${code}`)
+      .then((response) => response.json())
+      .then((data) => {
+        setCountryData(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching country data:", error);
+      });
+  };
+
   return (
     <div style={{ margin: "auto", width: "900px", height: "700px" }}>
-
       <VectorMap
         map={worldMill}
         containerStyle={{
@@ -13,27 +25,28 @@ function WorldMap() {
           height: "600px",
         }}
         backgroundColor="#083da7"
-        onRegionTipShow={function reginalTip(event, label, code) {
-          return label.html(`
-                  <div style="background-color: black; border-radius: 6px; min-height: 50px; width: 125px; color: white"; padding-left: 10px>
-                    <p>
-                    <b>
-                    ${label.html()}
-                    </b>
-                    </p>
-                    </div>`);
-        }}
-        onMarkerTipShow={function markerTip(event, label, code) {
-          return label.html(`
-                  <div style="background-color: white; border-radius: 6px; min-height: 50px; width: 125px; color: black !important; padding-left: 10px>
-                    <p style="color: black !important;">
-                    <b>
-                    ${label.html()}
-                    </b>
-                    </p>
-                    </div>`);
-        }}
+        onRegionClick={handleCountryClick}
       />
+
+      {countryData && (
+        <div style={{ marginTop: "10px", textAlign: "center" }}>
+          <h2 style={{ fontSize: "18px", marginBottom: "10px", color: "#333" }}>
+            {countryData[0].name.common}
+          </h2>
+          <p style={{ fontSize: "14px", color: "#777" }}>
+            <strong>Capital:</strong> {countryData[0].capital}
+          </p>
+          <p style={{ fontSize: "14px", color: "#777" }}>
+            <strong>Population:</strong> {countryData[0].population}
+          </p>
+          <p style={{ fontSize: "14px", color: "#777" }}>
+            <strong>Region:</strong> {countryData[0].region}
+          </p>
+          <p style={{ fontSize: "14px", color: "#777" }}>
+            <strong>Area:</strong> {countryData[0].area} km²
+          </p>
+        </div>
+      )}
     </div>
   );
 }
