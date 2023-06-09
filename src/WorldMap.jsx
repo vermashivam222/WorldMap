@@ -29,21 +29,28 @@ function WorldMap() {
       />
 
       {countryData && (
-        <div style={{ marginTop: "10px", textAlign: "center" }}>
-          <h2 style={{ fontSize: "18px", marginBottom: "10px", color: "#333" }}>
+        <div style={{ marginTop: "-20px" , textAlign: "center" , backgroundColor: "lightgreen"  }}>
+          <h2 style={{ fontSize: "24px", marginBottom: "10px", color: "#333" }}>
             {countryData[0].name.common}
           </h2>
-          <p style={{ fontSize: "14px", color: "#777" }}>
+          <p style={{ fontSize: "18px", color: "#777" }}>
             <strong>Capital:</strong> {countryData[0].capital}
           </p>
-          <p style={{ fontSize: "14px", color: "#777" }}>
+          <p style={{ fontSize: "18px", color: "#777" }}>
             <strong>Population:</strong> {countryData[0].population}
           </p>
-          <p style={{ fontSize: "14px", color: "#777" }}>
+          <p style={{ fontSize: "18px", color: "#777" }}>
             <strong>Region:</strong> {countryData[0].region}
           </p>
-          <p style={{ fontSize: "14px", color: "#777" }}>
+          <p style={{ fontSize: "18px", color: "#777" }}>
             <strong>Area:</strong> {countryData[0].area} km²
+          </p>
+          <p style={{ fontSize: "18px", color: "#777", marginBottom: "20px" }}>
+            <strong>TimeZones:</strong> {countryData[0].timezones}
+          </p>
+          <p style={{ fontSize: "18px", color: "#777" , paddingBottom: "30px" }}>
+            <strong>Languages Spoken:</strong>{" "}
+            {Object.values(countryData[0].languages).join(", ")}
           </p>
         </div>
       )}
